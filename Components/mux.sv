@@ -1,7 +1,10 @@
-module mux(input [4:0] sel,
-	output [31:0] rs);
+module mux(
+	input [4:0] sel,
+	input [31:0] register_32 [31:0],
+	output reg [31:0] rs);
 	
-	reg [31:0] register [31:0];
-	
-	
+	always @(*)
+	begin
+		rs = register_32[sel];
+	end
 endmodule
