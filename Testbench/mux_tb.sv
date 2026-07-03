@@ -8,6 +8,15 @@ module mux_tb();
 		.register_32(register_32),
 		.rs(rs),
 		.sel(sel)
-		);
+	);
+	
+	initial begin
+		register_32[1] = 1;
+		register_32[0] = 3;
+		sel = 0;
+		#5
 
+		$display("Value at register: %d", rs);
+	$finish;
+end
 endmodule
