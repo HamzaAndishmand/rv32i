@@ -1,9 +1,9 @@
 module ALU_Control(
 	input [6:0] opcode, funct7, 
 	input [2:0] funct3,
-	output reg [3:0] ALU_op);
+	output logic [3:0] ALU_op);
 		
-	always @ (*) begin
+	always_comb begin 
 		case(opcode)
 			7'b0110011: //R-Type Instructions
 				case(funct3) 
