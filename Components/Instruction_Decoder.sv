@@ -1,15 +1,15 @@
 module Instruction_Decoder(
 		input [31:0] Instruction,
-		output reg [6:0] op,
-		output reg [6:0] funct7,
-		output reg [2:0] funct3,
-		output reg [4:0] rs1,
-		output reg [4:0] rs2,
-		output reg [4:0] rd,
-		output reg [11:0] imm
+		output logic [6:0] op,
+		output logic [6:0] funct7,
+		output logic [2:0] funct3,
+		output logic [4:0] rs1,
+		output logic [4:0] rs2,
+		output logic [4:0] rd,
+		output logic [11:0] imm
 	);
 
-	always @(*) begin
+	always_comb begin
 		op = Instruction[6:0];
 		case(op)
 			7'b0110011: begin //R-Type Instructions
