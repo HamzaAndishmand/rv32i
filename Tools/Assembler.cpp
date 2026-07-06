@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <fstream>
+#include <iomanip>
 using namespace std;
 
 struct TypeCode {
@@ -22,4 +24,27 @@ map<string, TypeCode> instructionTable = {
     {"and",  {"0000000", "111", "0110011"}}
 };
 
+int main() {
+    ifstream inputFile("Instructions.s");
+    ofstream outputFile("Instructions.hex");
+
+    string line;
+
+    while (getline(inputFile, line)) {
+
+        for (char &c : line) {
+            if (c == ','){ 
+				c = ' ';
+			}
+        }
+
+        stringstream ss(line);
+        string mnemonic, rd, rs1, rs2;
+
+        ss >> mnemonic >> rd >> rs1 >> rs2;
+	}
+	inputFile.close();
+	outputFile.close();
+	return 0;
+}
 
