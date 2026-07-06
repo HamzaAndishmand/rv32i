@@ -7,6 +7,16 @@ module Mux_Src_B (
 	
 	always_comb begin 
 		case(sel)
+			2'b00:
+				srcB = rs2_data;
+			2'b01:
+				srcB = imm;
+			2'b10:
+				srcB = {{27{sel[1]}}, shamt[4:0]};
+			2'b11:
+				srcB = 32'h00000000;
+			default:
+				srcB = rs2_data;
 		endcase
 	end 
 endmodule 
