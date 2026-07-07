@@ -15,10 +15,17 @@ module mux_tb();
 	);
 	
 	initial begin
-		sel = 0;
+		rs2_data = 20;
+		shamt = 3;
+		imm = 232;
+		sel = 1;
 		#10
-
-		$display("Value at register: %d", rs);
+		if(srcB !== imm) begin
+			$error("Failed");
+		end
+		else begin 
+			$display("Pass");
+	  end
 	$finish;
-end
+	end
 endmodule
