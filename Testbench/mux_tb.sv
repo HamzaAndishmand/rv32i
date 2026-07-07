@@ -1,20 +1,22 @@
-`include "Components/mux.sv"
+`include "Modules/Mux_Src_B.sv"
 module mux_tb();
-	logic [31:0] register_32 [31:0];
-	logic [31:0] rs;
-	logic [4:0] sel;
+	logic [1:0] sel;
+	logic [31:0] imm;
+	logic [31:0] rs2_data;
+	logic [4:0] shamt;
+	logic [31:0] srcB;
 
-	mux dut(
-		.register_32(register_32),
-		.rs(rs),
+	Mux_Src_B dut(
+		.rs2_data(rs2_data),
+		.shamt(shamt),
+		.srcB(srcB),
+		.imm(imm),
 		.sel(sel)
 	);
 	
 	initial begin
-		register_32[1] = 1;
-		register_32[0] = 3;
 		sel = 0;
-		#5
+		#10
 
 		$display("Value at register: %d", rs);
 	$finish;
