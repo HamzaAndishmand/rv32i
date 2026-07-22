@@ -15,18 +15,31 @@ module ALU_tb();
 		);
 
 	initial begin
+		static int pass = 0;
+		static int fail = 0;
 
 		for (byte i = 0; i < 16; i++) begin 
 			control = i;
-			srcA[31:0] = $urandom;
-			srcB[31:0] = $urandom;
+			srcA[31:0] = $random;
+			srcB[31:0] = $random;
 			#10;
 
 			expected = alu_oracle(control, srcA, srcB);
+			#5;
+
 			if (expected !== result) begin
 				$display("ERROR at case %d     : Expected: %d answer: %d", control, expected, result);
+				fail = fail + 1;
+			end
+			else begin
+				pass = pass + 1;	
 			end
 		end 
+
+		$display("Total tests passed: %d", pass);
+		$display("Total tests failed: %d", fail);
+
+		$finish;
 	end
 
 	function automatic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
@@ -74,7 +87,7 @@ module ALU_tb();
 					return (a/b);
 				end
 				else begin
-					return 32'h0xFFFFFFF;
+					return 32'h0xFFFFFF;
 				end 
 			SLT:
 				if ($signed(a) < $signed(b)) begin
