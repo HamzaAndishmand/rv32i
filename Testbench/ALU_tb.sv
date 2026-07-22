@@ -16,22 +16,74 @@ module ALU_tb();
 
 	initial begin
 
-		control = AND;
+		for (byte i = 0; i < 16; i++) begin 
+			control = i;
+			srcA[31:0] = $urandom;
+			srcB[31:0] = $urandom;
+			#10;
 
-		srcA[31:0] = $urandom;
-		srcB[31:0] = $urandom;
-		#10;
-
-		$display("Control is: %d", control);
-		expected = srcA & srcB;
-
-		if (expected !== result) begin
-			$error("Failed at srcA=%d, srcB=%d, and control=%d", srcA, srcB, control);
-		end
-		else begin
-			$display("Passed");
-		end
-		$display("Your answer was: %d", expected);	
-		$display("Real answer was: %d", result);
+			expected = alu_oracle(control, srcA, srcB);
+			if (expected !== result) begin
+				$display("ERROR at case %d     : Expected: %d answer: %d", control, expected, result);
+			end
+		end 
 	end
+
+	function automatic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
+		case(c)
+			AND:
+				return a & b;
+			OR:
+				return a | b;
+			XOR:
+				return a ^ b;
+			NOT:
+				return ~a;
+			SLL:
+				return a << b[4:0];
+			SRL:
+				return a >> b[4:0];
+			SRA:
+				return $signed(a) >>> b[4:0];
+			NAND:
+				return ~(a & b);
+			XNOR:
+				return ~(a ^ b);
+			SLTU:
+				if (a < b) begin
+					return 1;
+				end 
+				else begin
+					return 0;
+				end 
+			SEQ:
+				if (a == b) begin
+					return 1;
+				end 
+				else begin
+					return 0;
+				end 
+			ADD:
+				return a + b;
+			SUB:
+				return a - b;
+			MULT:
+				return a*b;
+			DEV:
+				if (b != 0) begin 
+					return (a/b);
+				end
+				else begin
+					return 32'h0xFFFFFFF;
+				end 
+			SLT:
+				if ($signed(a) < $signed(b)) begin
+					return 1;
+				end 
+				else begin
+					return 0;
+				end
+			default: return 32'd0;
+		endcase 
+	endfunction
 endmodule
