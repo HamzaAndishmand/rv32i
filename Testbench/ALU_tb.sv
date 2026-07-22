@@ -1,11 +1,10 @@
-`include "Modules/ALU.sv"
+import defs_pkg::*;
 module ALU_tb();
 	logic [31:0] srcA, srcB;
 	logic [3:0] control;
 	logic [31:0] result;
 	logic [3:0] status;
 	logic [31:0] expected;
-
 	ALU dut(
 		.A(srcA),
 		.B(srcB),
@@ -17,9 +16,8 @@ module ALU_tb();
 	initial begin
 		static int pass = 0;
 		static int fail = 0;
-
 		for (byte i = 0; i < 16; i++) begin 
-			control = i;
+			control = i[3:0];
 			srcA[31:0] = $random;
 			srcB[31:0] = $random;
 			#10;
@@ -35,7 +33,7 @@ module ALU_tb();
 				pass = pass + 1;	
 			end
 		end 
-
+		$display("Flag: %d", status);
 		$display("Total tests passed: %d", pass);
 		$display("Total tests failed: %d", fail);
 
