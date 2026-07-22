@@ -14,5 +14,5 @@ package defs_pkg;
 	parameter logic [3:0] SUB = 4'b1100;
 	parameter logic [3:0] MULT = 4'b1101;
 	parameter logic [3:0] DEV = 4'b1110;
-	parameter logic [3:0] NOP = 4'b1111;
+	parameter logic [3:0] SLT = 4'b1111;
 endpackage
