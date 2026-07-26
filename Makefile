@@ -5,6 +5,7 @@ OBJ_DIR = obj_dir
 .PHONY: sim_verilator clean
 
 sim_verilator:
+	mkdir -p $(OBJ_DIR)/sv_only
 	$(VERILATOR) --binary --timing --sv \
 		--top-module ALU_tb \
 		$(SV_SOURCES) Testbench/ALU_tb.sv \

@@ -15,11 +15,11 @@ module ALU(input [31:0] A, B,
 			NOT:
 				result = ~A; 
 			SLL:
-				result = A << B; 
+				result = A << B[4:0]; 
 			SRL:
-				result = A >> B; 
+				result = A >> B[4:0]; 
 			SRA:
-				result = A >>> B; 
+				result = A >>> B[4:0]; 
 			NAND:
 				result = ~(A & B); 
 			XNOR:
