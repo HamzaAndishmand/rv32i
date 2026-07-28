@@ -33,7 +33,6 @@ module ALU_tb();
 					break;
 				end
 				else begin
-					$display("SrcA = %d, SrcB = %d", srcA, srcB);
 					pass = pass + 1;
 					count = count - 1;
 				end
