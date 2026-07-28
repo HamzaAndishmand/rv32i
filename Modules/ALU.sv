@@ -19,7 +19,7 @@ module ALU(input [31:0] A, B,
 			SRL:
 				result = A >> B[4:0]; 
 			SRA:
-				result = A >>> B[4:0]; 
+				result = $signed(A) >>> B[4:0]; 
 			NAND:
 				result = ~(A & B); 
 			XNOR:
