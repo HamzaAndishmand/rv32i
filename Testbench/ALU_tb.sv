@@ -16,21 +16,27 @@ module ALU_tb();
 	initial begin
 		static int pass = 0;
 		static int fail = 0;
-		for (byte i = 0; i < 16; i++) begin 
-			control = i[3:0];
-			srcA[31:0] = $random;
-			srcB[31:0] = $random;
-			#10;
+		static int count = 1000;
+		while (count > 0) begin
+			for (byte i = 0; i < 16; i++) begin 
+				control = i[3:0];
+				srcA[31:0] = $random;
+				srcB[31:0] = $random;
+				#10;
 
-			expected = alu_oracle(control, srcA, srcB);
-			#5;
-
-			if (expected !== result) begin
-				$display("ERROR at case %d     : Expected: %d answer: %d", control, expected, result);
-				fail = fail + 1;
-			end
-			else begin
-				pass = pass + 1;	
+				expected = alu_oracle(control, srcA, srcB);
+				#5;
+				
+				if (expected !== result) begin
+					$display("ERROR at case %d     : Expected: %d answer: %d", control, expected, result);
+					fail = fail + 1;
+					break;
+				end
+				else begin
+					$display("SrcA = %d, SrcB = %d", srcA, srcB);
+					pass = pass + 1;
+					count = count - 1;
+				end
 			end
 		end 
 		$display("Flag: %d", status);
@@ -52,8 +58,7 @@ module ALU_tb();
 				return ~a;
 			SLL:
 				return a << b[4:0];
-			SRL:
-				return a >> b[4:0];
+			SRL: return a >> b[4:0];
 			SRA:
 				return $signed(a) >>> b[4:0];
 			NAND:
