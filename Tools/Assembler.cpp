@@ -1,8 +1,9 @@
-#include <iostream>
 #include <string>
 #include <map>
 #include <fstream>
-#include <iomanip>
+#include <sstream>
+#include <iostream>
+#include <bitset>
 using namespace std;
 
 struct TypeCode {
@@ -24,27 +25,67 @@ map<string, TypeCode> instructionTable = {
     {"and",  {"0000000", "111", "0110011"}}
 };
 
-int main() {
-    ifstream inputFile("Instructions.s");
-    ofstream outputFile("Instructions.hex");
+int main(int argc, char** argv) {
+    ifstream Assembly("Instructions.s");
+    ofstream Binary("Instructions.bin");
 
-    string line;
+    string line, mnemonic, f3, f7, op;
 
-    while (getline(inputFile, line)) {
-
+    while (getline(Assembly, line) && Assembly.is_open()) {
         for (char &c : line) {
             if (c == ','){ 
 				c = ' ';
 			}
-        }
+		}
+		stringstream ss(line);
+		ss >> mnemonic;
+		auto iter = instructionTable.find(mnemonic);
+		
+		if (iter != instructionTable.end()) {
+			TypeCode code = iter->second;
+			f3 = code.funct3;
+			f7 = code.funct7;
+			op = code.opcode;
+		}
+		for (char &c : line) {
+         	if (!isdigit(c)){ 
+				c = ' ';
+			}
+		}
 
-        stringstream ss(line);
-        string mnemonic, rd, rs1, rs2;
+		ss.clear();
+		ss.str(line);
 
-        ss >> mnemonic >> rd >> rs1 >> rs2;
+		int i = 0;
+		int reg;
+		bitset<5> rd, rs1, rs2;
+		while (ss >> reg) {
+			if (i == 0){
+				rd = bitset<5> (reg);
+				cout << reg;
+			}
+			else if (i == 1) {
+				rs1 = bitset<5> (reg);
+				cout << reg;
+			}
+			else {
+				rs2 = bitset<5> (reg);
+				cout << reg;
+			}
+			i = i + 1;
+		}
+
+		Binary << f7;
+		Binary << rs2;
+		Binary << rs1;
+		Binary << f3;
+		Binary << rd;
+		Binary << op;
+		Binary << "\n";
 	}
-	inputFile.close();
-	outputFile.close();
+
+	Assembly.close();
+	Binary.close();
 	return 0;
 }
 
