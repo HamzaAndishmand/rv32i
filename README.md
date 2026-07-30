@@ -55,7 +55,6 @@ was true for almost all of the random 32-bit values generated.
 - ALU contains non-RV32i operations, NOT, NAND, XNOR, SEQ, MULT and DIV which belong to the M-extension rather than the ISA
 - ALU `status` output is hardcoded to 0, presently dead code. Zero and overflow flags to be implemented.
 - Latch inference risk in Instruction_Decoder, due to not having default branch as well as not assigning `funct7`/`imm` on every path.
-- Assembler does not yet produce output. Still in progress.
 - No edge cases when testbenching, only 16 random vectors. Directed cases with larger constraind random sweep are planned.
 - CI only covers ALU testbench. More modules soon to be added as soon as the testbenches are complete.
 - CI installs Verilator through apt (Ubuntu 24.04 ships 5.020). Local development uses a newer version.
