@@ -18,13 +18,14 @@ in CI after every push.
 ## Project Status
 **Current Working:**
 - ALU with a self-checking testbench and independent oracle
+- C++ assembler that converts R-type instructions to 32 bit binary machine code
 - CI pipeline under Verilator
 - Decoders, register file, PC, and immediate generator as verified standalone modules
 
 **Soon to be added:** 
-- Assembler instruction encoding (R-type first)
 - Single-cycle datapath integration
 - C++ golden reference models for every other module
+- I, S and B type instructions planned for assembler as CPU grows
 
 ## Architecture
 ![Block diagram](./Diagrams/RV32I.jpg)
