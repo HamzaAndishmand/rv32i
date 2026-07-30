@@ -62,15 +62,12 @@ int main(int argc, char** argv) {
 		while (ss >> reg) {
 			if (i == 0){
 				rd = bitset<5> (reg);
-				cout << reg;
 			}
 			else if (i == 1) {
 				rs1 = bitset<5> (reg);
-				cout << reg;
 			}
 			else {
 				rs2 = bitset<5> (reg);
-				cout << reg;
 			}
 			i = i + 1;
 		}
