@@ -12,30 +12,18 @@ module ALU(input [31:0] A, B,
 				result = A | B; 
 			XOR:
 				result = A ^ B; 
-			NOT:
-				result = ~A; 
 			SLL:
 				result = A << B[4:0]; 
 			SRL:
 				result = A >> B[4:0]; 
 			SRA:
 				result = $signed(A) >>> B[4:0]; 
-			NAND:
-				result = ~(A & B); 
-			XNOR:
-				result = ~(A ^ B);
 			SLTU:
 				result = (A < B) ? 32'd1 : 32'd0; 
-			SEQ:
-				result = (A == B) ? 32'd1 : 32'd0; 
 			ADD:
 				result = A + B; 
 			SUB:
 				result = A - B; 
-			MULT:
-				result = A * B; 
-			DEV:
-				result = A / B; 
 			SLT:
 				result = ($signed(A) < $signed(B)) ? 32'd1 : 32'd0; 
 			default result = 32'd0;

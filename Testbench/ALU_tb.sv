@@ -18,7 +18,7 @@ module ALU_tb();
 		static int fail = 0;
 		static int count = 1000;
 		while (count > 0) begin
-			for (byte i = 0; i < 16; i++) begin 
+			for (byte i = 0; i < 10; i++) begin 
 				control = i[3:0];
 				srcA[31:0] = $random;
 				srcB[31:0] = $random;
@@ -53,26 +53,13 @@ module ALU_tb();
 				return a | b;
 			XOR:
 				return a ^ b;
-			NOT:
-				return ~a;
 			SLL:
 				return a << b[4:0];
 			SRL: return a >> b[4:0];
 			SRA:
 				return $signed(a) >>> b[4:0];
-			NAND:
-				return ~(a & b);
-			XNOR:
-				return ~(a ^ b);
 			SLTU:
 				if (a < b) begin
-					return 1;
-				end 
-				else begin
-					return 0;
-				end 
-			SEQ:
-				if (a == b) begin
 					return 1;
 				end 
 				else begin
@@ -82,15 +69,6 @@ module ALU_tb();
 				return a + b;
 			SUB:
 				return a - b;
-			MULT:
-				return a*b;
-			DEV:
-				if (b != 0) begin 
-					return (a/b);
-				end
-				else begin
-					return 32'h0xFFFFFF;
-				end 
 			SLT:
 				if ($signed(a) < $signed(b)) begin
 					return 1;
