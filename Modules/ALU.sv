@@ -1,8 +1,8 @@
 import defs_pkg::*;
 module ALU(input [31:0] A, B,
 					input [3:0] control,
-					output logic [31:0] result,
-					output logic [3:0] status);
+					output logic [31:0] result
+					);
 	always_comb begin
 
 		case(control)
@@ -28,7 +28,6 @@ module ALU(input [31:0] A, B,
 				result = ($signed(A) < $signed(B)) ? 32'd1 : 32'd0; 
 			default result = 32'd0;
 		endcase
-		status = 4'b0000;
 	end
 endmodule
 		

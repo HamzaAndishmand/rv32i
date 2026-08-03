@@ -28,7 +28,7 @@ in CI after every push.
 - I, S and B type instructions planned for assembler as CPU grows
 
 ## Architecture
-![Block diagram](./Diagrams/RV32I.jpg)
+![Block diagram](./Diagrams/RV32I.drawio.png)
 
 ## Verification Philosophy
 

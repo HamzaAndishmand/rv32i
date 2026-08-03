@@ -3,14 +3,12 @@ module ALU_tb();
 	logic [31:0] srcA, srcB;
 	logic [3:0] control;
 	logic [31:0] result;
-	logic [3:0] status;
 	logic [31:0] expected;
 	ALU dut(
 		.A(srcA),
 		.B(srcB),
 		.control(control),
-		.result(result),
-		.status(status)
+		.result(result)
 		);
 
 	initial begin
@@ -38,7 +36,6 @@ module ALU_tb();
 				end
 			end
 		end 
-		$display("Flag: %d", status);
 		$display("Total tests passed: %d", pass);
 		$display("Total tests failed: %d", fail);
 
