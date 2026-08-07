@@ -4,6 +4,7 @@ module ALU_tb();
 	logic [3:0] control;
 	logic [31:0] result;
 	logic [31:0] expected;
+	
 	ALU dut(
 		.A(srcA),
 		.B(srcB),
@@ -11,23 +12,31 @@ module ALU_tb();
 		.result(result)
 		);
 
-	initial begin
-		static int pass = 0;
-		static int fail = 0;
-		static int count = 1000;
+	int pass = 0;
+	int fail = 0;
+	
+	task automatic reset_tally();
+		pass = 0;
+		fail = 0;
+	endtask
+			
+	task automatic random_num();
+		int count = 1000;
 		while (count > 0) begin
 			for (byte i = 0; i < 10; i++) begin 
+		
 				control = i[3:0];
-				srcA[31:0] = $random;
-				srcB[31:0] = $random;
+				srcA = $random;
+				srcB = $random;
 				#10;
 
 				expected = alu_oracle(control, srcA, srcB);
-				#5;
-				
+				#10;
+
 				if (expected !== result) begin
-					$display("ERROR at case %d     : Expected: %d answer: %d", control, expected, result);
+					$display("Case %d     : Expected: %d answer: %d", control, expected, result);
 					fail = fail + 1;
+					count = count -1;
 					break;
 				end
 				else begin
@@ -38,10 +47,8 @@ module ALU_tb();
 		end 
 		$display("Total tests passed: %d", pass);
 		$display("Total tests failed: %d", fail);
-
-		$finish;
-	end
-
+	endtask
+	
 	function automatic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
 		case(c)
 			AND:
@@ -76,4 +83,10 @@ module ALU_tb();
 			default: return 32'd0;
 		endcase 
 	endfunction
+
+	initial begin
+		random_num();	
+		reset_tally();
+		$finish;
+	end
 endmodule
