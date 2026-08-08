@@ -96,7 +96,7 @@ module ALU_tb();
 
 	function automatic logic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
 		case(c)
-			AND: begin
+			AND: 
 				for(int i = 0; i < 32; i++) begin
 					if(a[i] == 0) begin
 						expected[i] = 0;
@@ -108,9 +108,18 @@ module ALU_tb();
 						expected[i] = 1;
 					end
 				end
-			end
 			OR:
-				expected = a | b;
+				for(int i = 0; i < 32; i++) begin
+					if(a[i] == 1) begin
+						expected[i] = 1;
+					end
+					else if(b[i] == 1) begin
+						expected[i] = 1;
+					end
+					else begin
+						expected[i] = 0;
+					end
+				end
 			XOR:
 				expected = a ^ b;
 			SLL:
