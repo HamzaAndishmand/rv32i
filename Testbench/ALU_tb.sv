@@ -93,46 +93,58 @@ module ALU_tb();
 		$display("Total tests failed: %d", fail);
 		$display("random_num done");
 	endtask
-	
-	function automatic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
+
+	function automatic logic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
 		case(c)
-			AND:
-				return a & b;
+			AND: begin
+				for(int i = 0; i < 32; i++) begin
+					if(a[i] == 0) begin
+						expected[i] = 0;
+					end
+					else if(b[i] == 0) begin
+						expected[i] = 0;
+					end
+					else begin
+						expected[i] = 1;
+					end
+				end
+			end
 			OR:
-				return a | b;
+				expected = a | b;
 			XOR:
-				return a ^ b;
+				expected = a ^ b;
 			SLL:
-				return a << b[4:0];
+				expected = a << b[4:0];
 			SRL: 
-				return a >> b[4:0];
+				expected = a >> b[4:0];
 			SRA:
-				return $signed(a) >>> b[4:0];
+				expected = $signed(a) >>> b[4:0];
 			SLTU:
 				if (a < b) begin
-					return 1;
+					expected = 1;
 				end 
 				else begin
-					return 0;
+					expected = 0;
 				end 
 			ADD:
-				return a + b;
+				expected = a + b;
 			SUB:
-				return a - b;
+				expected = a - b;
 			SLT:
 				if ($signed(a) < $signed(b)) begin
-					return 1;
+					expected = 1;
 				end 
 				else begin
-					return 0;
+					expected = 0;
 				end
 			default: 
-				return 32'd0;
+				expected = 32'd0;
 		endcase 
+		return expected;
 	endfunction
 
 	initial begin
-		random_num();	
+		random_num();
 		reset_tally();
 		check_corners();
 		$finish;
