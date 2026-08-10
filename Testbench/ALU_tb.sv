@@ -56,6 +56,9 @@ module ALU_tb();
 						fail = fail + 1;
 					end
 					else begin
+						if(expected === 32'b?) begin
+							$display("Warning! @ Case %d: Expected: %d", op(enum_cases[k]), expected);
+						end
 						pass = pass + 1;
 					end
 				end
@@ -84,6 +87,9 @@ module ALU_tb();
 					break;
 				end
 				else begin
+					if(expected === 32'b?) begin
+						$display("Warning! @ Case %d: Expected: %d", op(control) ,expected);
+					end
 					pass = pass + 1;
 					count = count - 1;
 				end
