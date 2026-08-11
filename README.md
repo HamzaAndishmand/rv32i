@@ -52,13 +52,10 @@ was true for almost all of the random 32-bit values generated.
 **Verified:** All 16 ALU test cases pass after fix.
 
 ## Known Issues
-- ALU contains non-RV32i operations, NOT, NAND, XNOR, SEQ, MULT and DIV which belong to the M-extension rather than the ISA
 - Latch inference risk in Instruction_Decoder, due to not having default branch as well as not assigning `funct7`/`imm` on every path.
-- No edge cases when testbenching, only 16 random vectors. Directed cases with larger constraind random sweep are planned.
 - CI only covers ALU testbench. More modules soon to be added as soon as the testbenches are complete.
 - CI installs Verilator through apt (Ubuntu 24.04 ships 5.020). Local development uses a newer version.
-- No integrated datapath yet. Modules are verified standalone. Single-cycle CPU integration is the next milestone after the
-  assembler.
+- No integrated datapath yet. Modules are verified standalone. Single-cycle CPU integration is the next milestone after all modules are thoroughly tested.
 
 ## Build & Run
 
