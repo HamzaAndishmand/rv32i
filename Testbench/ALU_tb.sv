@@ -127,7 +127,14 @@ module ALU_tb();
 					end
 				end
 			XOR:
-				expected = a ^ b;
+				for(int i = 0; i < 32; i++) begin
+					if(a[i] == b[i]) begin
+						expected[i] = 0;
+					end
+					else begin
+						expected[i] = 1;
+					end 
+				end 
 			SLL:
 				expected = a << b[4:0];
 			SRL: 
