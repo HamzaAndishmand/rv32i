@@ -136,7 +136,14 @@ module ALU_tb();
 					end 
 				end 
 			SLL:
-				expected = a << b[4:0];
+				for(int i = 0; i < 32; i++) begin
+					if(i >= int'(b[4:0])) begin
+						expected[i] = a[i - int'(b[4:0])];
+					end
+					else begin
+						expected[i] = 0;
+					end 
+				end
 			SRL: 
 				expected = a >> b[4:0];
 			SRA:
