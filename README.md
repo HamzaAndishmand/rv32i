@@ -72,10 +72,13 @@ make sim_verilator
 
 **Expected output:**
 ```bash
-Total tests passed:          16
+Total tests passed:        1000
 Total tests failed:           0
-- Testbench/ALU_tb.sv:39: Verilog $finish
-- Verilator: $finish at 240ps; walltime 0.000 s; speed 6.602 us/s
+random_num done
+Total tests passed:        3240
+Total tests failed:           0
+check_corners done
+- Testbench/ALU_tb.sv:162: Verilog $finish
 ```
 
 To clean build artifacts:
