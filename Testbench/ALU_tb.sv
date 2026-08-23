@@ -28,7 +28,7 @@ module ALU_tb();
 		32'hAAAAAAAA, 32'h00000002, 32'h0000000F, 
 		32'h0000001F, 32'h00000020, 32'h00000021, 
 		32'h0000FFFF, 32'hFFFF0000, 32'h80000001
-	};
+		};
 
 	logic [3:0] enum_cases[10] = '{
 			AND, OR, XOR, SLL, SRL, SRA, SLTU, ADD, SUB, SLT
@@ -101,6 +101,10 @@ module ALU_tb();
 	endtask
 
 	function automatic logic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
+
+		int shamt_int = int'(b[4:0]);
+		logic [62:0] sign_sra = { {31{a[31]}}, a};
+
 		case(c)
 			AND: 
 				for(int i = 0; i < 32; i++) begin
@@ -137,17 +141,24 @@ module ALU_tb();
 				end 
 			SLL:
 				for(int i = 0; i < 32; i++) begin
-					if(i >= int'(b[4:0])) begin
-						expected[i] = a[i - int'(b[4:0])];
+					if(i >= shamt_int) begin
+						expected[i] = a[i - shamt_int];
 					end
 					else begin
 						expected[i] = 0;
 					end 
 				end
 			SRL: 
-				expected = a >> b[4:0];
+				for(int i = 0; i < 32; i++) begin
+					if((i + shamt_int) < 32) begin
+						expected[i] = a[i + shamt_int];
+					end
+					else begin
+						expected[i] = 0;
+					end
+				end
 			SRA:
-				expected = $signed(a) >>> b[4:0];
+				expected = sign_sra[shamt_int +: 32];
 			SLTU:
 				if (a < b) begin
 					expected = 1;
