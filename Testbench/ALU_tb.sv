@@ -99,6 +99,25 @@ module ALU_tb();
 		$display("Total tests failed: %d", fail);
 		$display("random_num done");
 	endtask
+	
+
+	function automatic logic [32:0] ripple_carry_adder(logic [31:0] a, logic [31:0] b, logic c_in);
+		logic [31:0] sum;
+		logic c_out;
+		c_out = c_in;
+		for(int i = 0; i < 32; i++) begin
+			sum[i] = 
+				alu_oracle(XOR, 
+				alu_oracle(XOR, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b[i]}}), {{31{1'b0}}, {c_out}})[0];
+			c_out = 
+				alu_oracle(OR, 
+				alu_oracle(OR, 
+				alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b[i]}}), 
+				alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {c_out}})), 
+				alu_oracle(AND, {{31{1'b0}}, {b[i]}}, {{31{1'b0}}, {c_out}}))[0];
+		end
+		return {c_out, sum};
+	endfunction 
 
 	function automatic logic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
 
@@ -132,7 +151,7 @@ module ALU_tb();
 				end
 			XOR:
 				for(int i = 0; i < 32; i++) begin
-					if(a[i] == b[i]) begin
+					if(a[i] == b[i]) begin 
 						expected[i] = 0;
 					end
 					else begin
@@ -166,10 +185,6 @@ module ALU_tb();
 				else begin
 					expected = 0;
 				end 
-			ADD:
-				expected = a + b;
-			SUB:
-				expected = a - b;
 			SLT:
 				if ($signed(a) < $signed(b)) begin
 					expected = 1;
@@ -177,6 +192,10 @@ module ALU_tb();
 				else begin
 					expected = 0;
 				end
+			ADD:
+				expected = ripple_carry_adder(a, b, 0)[31:0];
+			SUB:
+				expected = a - b;
 			default: 
 				expected = 32'd0;
 		endcase 
