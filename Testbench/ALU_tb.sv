@@ -127,71 +127,30 @@ module ALU_tb();
 		case(c)
 			AND: 
 				for(int i = 0; i < 32; i++) begin
-					if(a[i] == 0) begin
-						expected[i] = 0;
-					end
-					else if(b[i] == 0) begin
-						expected[i] = 0;
-					end
-					else begin
-						expected[i] = 1;
-					end
+					expected[i] = (a[i] == 0) ? 0: (b[i] == 0) ? 0:1;
 				end
 			OR:
 				for(int i = 0; i < 32; i++) begin
-					if(a[i] == 1) begin
-						expected[i] = 1;
-					end
-					else if(b[i] == 1) begin
-						expected[i] = 1;
-					end
-					else begin
-						expected[i] = 0;
-					end
+					expected[i] = (a[i] == 1) ? 1: (b[i] == 1) ? 1:0;
 				end
 			XOR:
 				for(int i = 0; i < 32; i++) begin
-					if(a[i] == b[i]) begin 
-						expected[i] = 0;
-					end
-					else begin
-						expected[i] = 1;
-					end 
-				end 
+					expected[i] = (a[i] == b[i]) ? 0:1;
+				end
 			SLL:
 				for(int i = 0; i < 32; i++) begin
-					if(i >= shamt_int) begin
-						expected[i] = a[i - shamt_int];
-					end
-					else begin
-						expected[i] = 0;
-					end 
-				end
+					expected[i] = (i >= shamt_int) ? a[i - shamt_int]:0;
+				end 
 			SRL: 
 				for(int i = 0; i < 32; i++) begin
-					if((i + shamt_int) < 32) begin
-						expected[i] = a[i + shamt_int];
-					end
-					else begin
-						expected[i] = 0;
-					end
+					expected[i] = (i + shamt_int <  32) ? a[i + shamt_int]:0;
 				end
 			SRA:
 				expected = sign_sra[shamt_int +: 32];
 			SLTU:
-				if (a < b) begin
-					expected = 1;
-				end 
-				else begin
-					expected = 0;
-				end 
+				expected = (a < b) ? 32'd1:0;
 			SLT:
-				if ($signed(a) < $signed(b)) begin
-					expected = 1;
-				end 
-				else begin
-					expected = 0;
-				end
+				expected = ($signed(a) < $signed(b)) ? 1:0;
 			ADD:
 				expected = ripple_carry_adder(a, b, 0)[31:0];
 			SUB:
