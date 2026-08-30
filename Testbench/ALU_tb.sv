@@ -101,20 +101,40 @@ module ALU_tb();
 	endtask
 	
 
-	function automatic logic [32:0] ripple_carry_adder(logic [31:0] a, logic [31:0] b, logic c_in);
+	function automatic logic [32:0] ripple_carry_adder(logic [31:0] a, logic [31:0] b, logic c_in, logic add_sub);
 		logic [31:0] sum;
 		logic c_out;
+		logic [31:0] b_inv;
 		c_out = c_in;
-		for(int i = 0; i < 32; i++) begin
-			sum[i] = 
-				alu_oracle(XOR, 
-				alu_oracle(XOR, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b[i]}}), {{31{1'b0}}, {c_out}})[0]; // sum = a[i] ^ b[i] ^ c
-			c_out = 
-				alu_oracle(OR, 
-				alu_oracle(OR, 
-				alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b[i]}}), 
-				alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {c_out}})), 
-				alu_oracle(AND, {{31{1'b0}}, {b[i]}}, {{31{1'b0}}, {c_out}}))[0]; // carry_out = (a[i] & b[i]) | (a[i] & c) | (b[i] & c)
+		if(add_sub == 0) begin
+			for(int i = 0; i < 32; i++) begin
+				sum[i] = 
+					alu_oracle(XOR, 
+					alu_oracle(XOR, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b[i]}}), {{31{1'b0}}, {c_out}})[0]; // sum = a[i] ^ b[i] ^ c
+				c_out = 
+					alu_oracle(OR, 
+					alu_oracle(OR, 
+					alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b[i]}}), 
+					alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {c_out}})), 
+					alu_oracle(AND, {{31{1'b0}}, {b[i]}}, {{31{1'b0}}, {c_out}}))[0]; // carry_out = (a[i] & b[i]) | (a[i] & c) | (b[i] & c)
+			end
+		end
+		else begin
+			for(int i = 0; i < 32; i++) begin
+				b_inv[i] = (b[i] == 1) ? 0:1;
+			end
+			b_inv = ripple_carry_adder(b_inv, 32'h00000001, 0, 0)[31:0];
+			for(int i = 0; i < 32; i++) begin
+				sum[i] = 
+					alu_oracle(XOR, 
+					alu_oracle(XOR, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b_inv[i]}}), {{31{1'b0}}, {c_out}})[0]; 
+				c_out = 
+					alu_oracle(OR, 
+					alu_oracle(OR, 
+					alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b_inv[i]}}), 
+					alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {c_out}})), 
+					alu_oracle(AND, {{31{1'b0}}, {b_inv[i]}}, {{31{1'b0}}, {c_out}}))[0]; 
+			end
 		end
 		return {c_out, sum};
 	endfunction 
@@ -152,9 +172,9 @@ module ALU_tb();
 			SLT:
 				expected = ($signed(a) < $signed(b)) ? 1:0;
 			ADD:
-				expected = ripple_carry_adder(a, b, 0)[31:0];
+				expected = ripple_carry_adder(a, b, 0, 0)[31:0];
 			SUB:
-				expected = a - b;
+				expected = ripple_carry_adder(a, b, 0, 1)[31:0];
 			default: 
 				expected = 32'd0;
 		endcase 
