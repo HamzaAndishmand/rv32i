@@ -118,25 +118,15 @@ module ALU_tb();
 					alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {c_out}})), 
 					alu_oracle(AND, {{31{1'b0}}, {b[i]}}, {{31{1'b0}}, {c_out}}))[0]; // carry_out = (a[i] & b[i]) | (a[i] & c) | (b[i] & c)
 			end
+		return {c_out, sum};
 		end
 		else begin
 			for(int i = 0; i < 32; i++) begin
 				b_inv[i] = (b[i] == 1) ? 0:1;
 			end
 			b_inv = ripple_carry_adder(b_inv, 32'h00000001, 0, 0)[31:0];
-			for(int i = 0; i < 32; i++) begin
-				sum[i] = 
-					alu_oracle(XOR, 
-					alu_oracle(XOR, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b_inv[i]}}), {{31{1'b0}}, {c_out}})[0]; 
-				c_out = 
-					alu_oracle(OR, 
-					alu_oracle(OR, 
-					alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {b_inv[i]}}), 
-					alu_oracle(AND, {{31{1'b0}}, {a[i]}}, {{31{1'b0}}, {c_out}})), 
-					alu_oracle(AND, {{31{1'b0}}, {b_inv[i]}}, {{31{1'b0}}, {c_out}}))[0]; 
-			end
+			return ripple_carry_adder(a, b_inv, 0, 0);
 		end
-		return {c_out, sum};
 	endfunction 
 
 	function automatic logic [31:0] alu_oracle(logic [3:0] c, logic [31:0] a, logic [31:0] b);
