@@ -11,9 +11,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install Verilator
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y verilator
+        uses: veryl-lang/setup-verilator@v1
+        with:
+          version: 5.050
 
       - name: Run ALU testbench
         run: make sim_verilator
