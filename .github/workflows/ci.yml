@@ -1,11 +1,11 @@
-name: RTL Verification
+name: RTL CI
 
 on:
   push:
   pull_request:
 
 jobs:
-  verilator-tests:
+  verilator_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,5 +15,7 @@ jobs:
         with:
           version: 5.050
 
-      - name: Run ALU testbench
-        run: make sim_verilator
+      - name: Run testbench
+        run: |
+          verilator --version
+          make sim_verilator 
