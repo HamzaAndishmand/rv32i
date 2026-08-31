@@ -166,7 +166,7 @@ module ALU_tb();
 			SLTU:
 				expected = (ripple_carry_adder(a, b, 0, 1)[32] == 0) ? 1:0;
 			SLT:
-				expected = ($signed(a) < $signed(b)) ? 1:0;
+				expected = {{31'b0}, (ripple_carry_adder(a, b, 0, 1)[31] ^ ((a[31] != b[31]) && (ripple_carry_adder(a, b, 0, 1)[31] != a[31])))};
 			ADD:
 				expected = ripple_carry_adder(a, b, 0, 0)[31:0];
 			SUB:
