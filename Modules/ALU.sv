@@ -1,10 +1,10 @@
 import defs_pkg::*;
-module ALU(input [31:0] A, B,
-					input [3:0] control,
-					output logic [31:0] result
-					);
+module ALU(
+	input [31:0] A, B,
+	input [3:0] control,
+	output logic [31:0] result
+	);
 	always_comb begin
-
 		case(control)
 			AND:
 				result = A & B; 
