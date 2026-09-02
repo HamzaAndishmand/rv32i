@@ -12,9 +12,8 @@ module Instruction_Memory #(
 		end
 		
 		$readmemb(MEMORY_FILE, memory);
+	end
 
-		instruction = memory[pc[9:2]];
-
-	end 
+	assign instruction = memory[pc[9:2]];
 
 endmodule
