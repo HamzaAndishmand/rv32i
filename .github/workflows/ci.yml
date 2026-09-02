@@ -9,6 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ ccache make perl zlib1g
+
       - name: cac_Verilator
         id: cache_verilator
         uses: actions/cache@v4
@@ -20,7 +25,7 @@ jobs:
         if: steps.cache_verilator.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update
-          sudo apt-get install -y git help2man perl python3 make autoconf g++ flex bison ccache libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlib1g zlib1g-dev
+          sudo apt-get install -y git help2man python3 autoconf flex bison libgoogle-perftools-dev numactl perl-doc libfl2 libfl-dev zlib1g-dev
 
       - name: Build
         if: steps.cache_verilator.outputs.cache-hit != 'true'
