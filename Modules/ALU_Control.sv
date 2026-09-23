@@ -7,7 +7,7 @@ module ALU_Control(
 		
 	always_comb begin 
 		case(opcode)
-			7'b0110011: //R-Type Instructions
+			7'b0110011:
 				case(funct3) 
 					3'b000: begin
 						if (funct7 == 7'b0000000) begin 
@@ -45,7 +45,7 @@ module ALU_Control(
 					end
 				endcase
 
-			7'b0010011: //I-Type Instructions
+			7'b0010011:
 				case(funct3)
 					3'b000: begin
 						ALU_op = ADD; 
@@ -77,6 +77,10 @@ module ALU_Control(
 						ALU_op = AND;
 					end 
 				endcase
+			7'b0000011:
+				ALU_op = ADD;
+			default:
+				ALU_op = ADD;
 		endcase
 	end
-endmodule	
+endmodule
