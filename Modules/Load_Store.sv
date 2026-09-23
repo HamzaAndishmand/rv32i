@@ -2,8 +2,11 @@ module Load_Store (
 	input  logic [31:0] alu_result,
 	input  logic [2:0]  funct3,
 	input  logic [31:0] mem_rdata,
+	input  logic [31:0] rs2_data,
 	output logic [31:0] mem_addr,
-	output logic [31:0] load_data
+	output logic [31:0] load_data,
+	output logic [31:0] mem_wdata,
+	output logic [3:0]  mem_wmask
 	);
 
 	logic [7:0]  byte_sel;
@@ -31,8 +34,30 @@ module Load_Store (
 			3'b101: begin
 				load_data = {16'd0, half_sel};
 			end
-			default: 
+			default: begin
 				load_data = 32'd0;
+			end
+		endcase
+	end
+
+	always_comb begin
+		case (funct3)
+			3'b000: begin
+				mem_wdata = {4{rs2_data[7:0]}};
+				mem_wmask = 4'b0001 << alu_result[1:0];
+			end
+			3'b001: begin
+				mem_wdata = {2{rs2_data[15:0]}};
+				mem_wmask = 4'b0011 << {alu_result[1], 1'b0};
+			end
+			3'b010: begin
+				mem_wdata = rs2_data;
+				mem_wmask = 4'b1111;
+			end
+			default: begin
+				mem_wdata = 32'd0;
+				mem_wmask = 4'b0000;
+			end
 		endcase
 	end
 endmodule
