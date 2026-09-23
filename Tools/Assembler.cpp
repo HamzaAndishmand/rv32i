@@ -56,6 +56,9 @@ int main(int argc, char** argv) {
 			f7 = code.funct7;
 			op = code.opcode;
 		}
+		else {
+			continue;
+		}
 		for (char &c : line) {
          	if (!isdigit(c) && c != '-'){
 				c = ' ';
