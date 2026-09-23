@@ -82,7 +82,6 @@ int main(int argc, char** argv) {
 			}
 			i = i + 1;
 		}
-
 		if (op == "0010011") {
 			bitset<12> imm;
 			if (f3 == "001" || f3 == "101"){
@@ -91,23 +90,13 @@ int main(int argc, char** argv) {
 			else {
 				imm = bitset<12> (immediate);
 			}
-			Binary << imm;
-			Binary << rs1;
-			Binary << f3;
-			Binary << rd;
-			Binary << op;
+			Binary << imm << rs1 << f3 << rd << op;
 		}
 		else {
-			Binary << f7;
-			Binary << rs2;
-			Binary << rs1;
-			Binary << f3;
-			Binary << rd;
-			Binary << op;
+			Binary << f7 << rs2 << rs1 << f3 << rd << op;
 		}
 		Binary << "\n";
 	}
-
 	Assembly.close();
 	Binary.close();
 	return 0;
