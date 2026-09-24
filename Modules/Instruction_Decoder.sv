@@ -18,8 +18,9 @@ module Instruction_Decoder(
 				rs1 = Instruction[19:15];
 				rs2 = Instruction[24:20];
 				rd = Instruction[11:7];
+				imm = 12'd0;
 			end
-			7'b0010011: begin //I-Type Instructions 
+			7'b0010011, 7'b0000011, 7'b1100111: begin //I Type Instructions
 				funct7 = 7'd0;
 				funct3 = Instruction[14:12];
 				rs1 = Instruction[19:15];
