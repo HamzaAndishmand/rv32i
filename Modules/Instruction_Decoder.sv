@@ -28,6 +28,14 @@ module Instruction_Decoder(
 				rd = Instruction[11:7];
 				imm = Instruction[31:20];
 			end
+			default: begin
+				imm = 12'd0;
+				funct7 = 7'd0;
+				rs1 = 5'd0;
+				rs2 = 5'd0;
+				funct3 = 3'd0;
+				rd = 5'd0;
+			end
 		endcase
 	end
 endmodule
