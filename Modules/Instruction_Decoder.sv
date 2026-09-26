@@ -28,6 +28,14 @@ module Instruction_Decoder(
 				rd = Instruction[11:7];
 				imm = Instruction[31:20];
 			end
+			7'b0100011: begin //S-Type Instruction
+				funct7 = 7'd0;
+				funct3 = Instruction[14:12];
+				rs1 = Instruction[19:15];
+				rs2 = Instruction[24:20];
+				rd = 5'd0;
+				imm = {Instruction[31:25], Instruction[11:7]};
+			end
 			default: begin
 				imm = 12'd0;
 				funct7 = 7'd0;
