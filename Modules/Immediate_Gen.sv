@@ -6,6 +6,8 @@ module Immediate_Gen(
 		case(instruction[6:0])
 			7'b0010011, 7'b0000011, 7'b1100111:
 				imm_out = {{20{instruction[31]}}, instruction[31:20]};
+			7'b0100011:
+				imm_out = {{20{instruction[31]}}, instruction[31:25], instruction[11:7]};
 			default:
 				imm_out = 32'd0;
 		endcase
