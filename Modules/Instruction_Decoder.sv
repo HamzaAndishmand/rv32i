@@ -32,7 +32,7 @@ module Instruction_Decoder(
 				rs2 = Instruction[24:20];
 				rd = 5'd0;
 			end
-			7'b1100011: begin
+			7'b1100011: begin //B-Type Instruction
 				funct7 = 7'd0;
 				funct3 = Instruction[14:12];
 				rs1 = Instruction[19:15];
