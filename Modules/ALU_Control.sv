@@ -63,7 +63,7 @@ module ALU_Control(
 						ALU_op = XOR;
 					end 
 					3'b101: begin
-						if(imm[10] == 1) begin
+						if(funct7[5] == 1) begin
 							ALU_op = SRA;
 						end 
 						else begin

@@ -5,8 +5,7 @@ module Instruction_Decoder(
 		output logic [2:0] funct3,
 		output logic [4:0] rs1,
 		output logic [4:0] rs2,
-		output logic [4:0] rd,
-		output logic [11:0] imm
+		output logic [4:0] rd
 	);
 
 	always_comb begin
@@ -18,15 +17,13 @@ module Instruction_Decoder(
 				rs1 = Instruction[19:15];
 				rs2 = Instruction[24:20];
 				rd = Instruction[11:7];
-				imm = 12'd0;
 			end
 			7'b0010011, 7'b0000011, 7'b1100111: begin //I Type Instructions
-				funct7 = 7'd0;
+				funct7 = Instruction[30] ? {1'b0, 1'b1, 5'd0}:7'b0;
 				funct3 = Instruction[14:12];
 				rs1 = Instruction[19:15];
 				rs2 = 5'd0;
 				rd = Instruction[11:7];
-				imm = Instruction[31:20];
 			end
 			7'b0100011: begin //S-Type Instruction
 				funct7 = 7'd0;
@@ -34,10 +31,8 @@ module Instruction_Decoder(
 				rs1 = Instruction[19:15];
 				rs2 = Instruction[24:20];
 				rd = 5'd0;
-				imm = {Instruction[31:25], Instruction[11:7]};
 			end
 			default: begin
-				imm = 12'd0;
 				funct7 = 7'd0;
 				rs1 = 5'd0;
 				rs2 = 5'd0;
