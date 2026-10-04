@@ -11,10 +11,10 @@ module ALU_Control(
 				case(funct3) 
 					3'b000: begin
 						if (funct7 == 7'b0000000) begin 
-							ALU_op = SUB;
+							ALU_op = ADD;
 						end
 						else begin
-							ALU_op = ADD;
+							ALU_op = SUB;
 						end
 					end
 					3'b001: begin
@@ -78,6 +78,8 @@ module ALU_Control(
 					end 
 				endcase
 			7'b0000011:
+				ALU_op = ADD;
+			7'b0100011:
 				ALU_op = ADD;
 			default:
 				ALU_op = ADD;
