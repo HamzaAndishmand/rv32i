@@ -89,6 +89,8 @@ module ALU_Control(
 						ALU_op = ADD;
 					end
 				endcase	
+			7'b1100111:
+				ALU_op = ADD;
 			default:
 				ALU_op = ADD;
 		endcase
