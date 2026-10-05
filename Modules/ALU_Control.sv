@@ -78,9 +78,13 @@ module ALU_Control(
 					end 
 				endcase
 			7'b0000011:
-				ALU_op = ADD;
+				case(funct3)
+					3'b000, 3'b001, 3'b010, 3'b100, 3'b101: begin
+						ALU_op = ADD;
+					end
+				endcase
 			7'b0100011:
-				ALU_op = ADD;
+				ALU_op = ADD;	
 			default:
 				ALU_op = ADD;
 		endcase
