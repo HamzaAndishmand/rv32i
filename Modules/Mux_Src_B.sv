@@ -12,7 +12,7 @@ module Mux_Src_B (
 			2'b01:
 				srcB = imm;
 			2'b10:
-				srcB = {{27{sel[1]}}, shamt[4:0]};
+				srcB = {27'd0, shamt[4:0]};
 			2'b11:
 				srcB = 32'h00000000;
 			default:
