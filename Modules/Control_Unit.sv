@@ -54,7 +54,7 @@ module Control_Unit(
 				srcB_sel = 2'b01;
 				jump = 1'b1;
 				result_sel = 2'b10;
-				branch = 1'b1;
+				branch = 1'b0;
 			end
 			default: begin
 				reg_write = 1'b0;
