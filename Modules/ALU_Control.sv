@@ -2,7 +2,6 @@ import defs_pkg::*;
 module ALU_Control(
 	input [6:0] opcode, funct7, 
 	input [2:0] funct3,
-	input [11:0] imm,
 	output logic [3:0] ALU_op
 	);
 		
@@ -97,20 +96,14 @@ module ALU_Control(
 				ALU_op = ADD;
 			7'b1100011:
 				case(funct3)
-					3'b000, 3'b001: begin
+					3'b000, 3'b001, 3'b101, 3'b111: begin
 						ALU_op = SUB;
 					end
 					3'b100: begin
 						ALU_op = SLT;
 					end
-					3'b101: begin 
-						ALU_op = SUB;
-					end
 					3'b110: begin 
 						ALU_op = SLTU;
-					end
-					3'b111: begin 
-						ALU_op = SUB;
 					end
 					default:
 						ALU_op = SUB;
