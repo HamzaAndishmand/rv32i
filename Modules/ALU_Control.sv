@@ -82,12 +82,16 @@ module ALU_Control(
 					3'b000, 3'b001, 3'b010, 3'b100, 3'b101: begin
 						ALU_op = ADD;
 					end
+					default:
+						ALU_op = ADD;
 				endcase
 			7'b0100011:
 				case(funct3)
 					3'b000, 3'b001, 3'b010: begin
 						ALU_op = ADD;
 					end
+					default:
+						ALU_op = ADD;
 				endcase
 			7'b1100111:
 				ALU_op = ADD;
@@ -108,6 +112,8 @@ module ALU_Control(
 					3'b111: begin 
 						ALU_op = SUB;
 					end
+					default:
+						ALU_op = SUB;
 				endcase
 			7'b0110111:
 				ALU_op = SLL;
