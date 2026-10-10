@@ -111,7 +111,7 @@ module ALU_Control(
 			7'b0110111:
 				ALU_op = SLL;
 			7'b0010111:
-				ALU_op = SLL;
+				ALU_op = ADD;
 			7'b1101111:
 				ALU_op = ADD;
 			default:
