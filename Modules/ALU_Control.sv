@@ -3,7 +3,8 @@ module ALU_Control(
 	input [6:0] opcode, funct7, 
 	input [2:0] funct3,
 	input [11:0] imm,
-	output logic [3:0] ALU_op);
+	output logic [3:0] ALU_op
+	);
 		
 	always_comb begin 
 		case(opcode)
@@ -44,7 +45,6 @@ module ALU_Control(
 						ALU_op = AND; 
 					end
 				endcase
-
 			7'b0010011:
 				case(funct3)
 					3'b000: begin
@@ -88,8 +88,32 @@ module ALU_Control(
 					3'b000, 3'b001, 3'b010: begin
 						ALU_op = ADD;
 					end
-				endcase	
+				endcase
 			7'b1100111:
+				ALU_op = ADD;
+			7'b1100011:
+				case(funct3)
+					3'b000, 3'b001: begin
+						ALU_op = SUB;
+					end
+					3'b100: begin
+						ALU_op = SLT;
+					end
+					3'b101: begin 
+						ALU_op = SUB;
+					end
+					3'b110: begin 
+						ALU_op = SLTU;
+					end
+					3'b111: begin 
+						ALU_op = SUB;
+					end
+				endcase
+			7'b0110111:
+				ALU_op = SLL;
+			7'b0010111:
+				ALU_op = SLL;
+			7'b1101111:
 				ALU_op = ADD;
 			default:
 				ALU_op = ADD;
