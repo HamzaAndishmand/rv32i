@@ -28,6 +28,9 @@ This project contains the documentation of a single-cycle RV32I RISC-V processor
 - C++ golden reference models for every other module
 - S, B, U and J instruction conversion to assembler
 
+## Architecture
+![Block diagram](./Diagrams/RV32I.drawio.png)
+
 ## Verification Philosophy
 
 All modules are checked against a reference model. Each modules' testbench drives the DUT with random inputs then compares the outputs against the oracle
