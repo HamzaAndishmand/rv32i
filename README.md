@@ -9,23 +9,20 @@
 ## Overview
 This project contains the documentation of a single-cycle RV32I RISC-V processor that was implemented from scratch using SystemVerilog. Testbenches simulated under Verilator and are run after every push.
 
-
 ## Project Status
 **Current Working:**
-- R, I, S type instructions implemented
+- Complete implementation of all instruction types (R, I, S, B, U, and J)
 - ALU with a self-checking testbench and independent oracle
 - C++ assembler that converts R-type and I-type instructions to 32 bit binary machine code
 - CI pipeline under Verilator
 
 **WIP:**
-- B-type instruction
-- Branch Module
+- top.sv
 - Immediate_Gen testbench
 
 **Soon to be added:** 
-- U and J instruction implementation
 - Single-cycle data path integration
-- C++ golden reference models for every other module
+- C++ golden reference models for testbenched modules
 - S, B, U and J instruction conversion to assembler
 
 ## Architecture
@@ -37,8 +34,6 @@ All modules are checked against a reference model. Each modules' testbench drive
 which also implements the same operations from the spec, independent from the RTL. This system has done a good job at flagging bugs.
 
 Currently, oracles are written in SystemVerilog within each testbench. Porting the oracles to C++ golden models is the next step after datapath integration.
-
-CI currently runs the ALU testbench via Verilator on every push with more modules soon to be added as their testbenches come online.
 
 ## Known Issues
 - CI only covers ALU testbench. More modules to be added as soon as the testbenches are complete.
