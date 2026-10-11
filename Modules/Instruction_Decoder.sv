@@ -46,6 +46,13 @@ module Instruction_Decoder(
 				rs1 = 5'd0;
 				rs2 = 5'd0;
 			end
+			7'b1101111: begin
+				rd = Instruction[11:7];
+				rs1 = 5'd0;
+				rs2 = 5'd0;
+				funct7 = 7'b0;
+				funct3 = 3'd0;
+			end
 			default: begin
 				funct7 = 7'd0;
 				rs1 = 5'd0;
