@@ -109,7 +109,7 @@ module ALU_Control(
 						ALU_op = SUB;
 				endcase
 			7'b0110111:
-				ALU_op = SLL;
+				ALU_op = ADD;
 			7'b0010111:
 				ALU_op = ADD;
 			7'b1101111:
