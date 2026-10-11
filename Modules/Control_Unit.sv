@@ -72,6 +72,16 @@ module Control_Unit(
 				branch = 1'b1;
 				srcA_sel = 1'b0;
 			end
+			7'b0110111: begin
+				reg_write = 1'b1;
+				read = 1'b0;
+				mem_write = 1'b0;
+				srcB_sel = 2'b01;
+				jump = 1'b0;
+				result_sel = 2'b00;
+				branch = 1'b0;
+				srcA_sel = 1'b0;
+			end
 			default: begin
 				reg_write = 1'b0;
 				read  = 1'b0;
