@@ -6,7 +6,8 @@ module Control_Unit(
 	output logic [1:0] srcB_sel,
 	output logic jump,
 	output logic [1:0] result_sel,
-	output logic branch
+	output logic branch,
+	output logic srcA_sel
 	);
 
 	always_comb begin
@@ -19,6 +20,7 @@ module Control_Unit(
 				jump = 1'b0;
 				result_sel = 2'b00;
 				branch = 1'b0;
+				srcA_sel = 1'b0;
 			end
 			7'b0010011: begin
 				reg_write = 1'b1;
@@ -28,6 +30,7 @@ module Control_Unit(
 				jump = 1'b0;
 				result_sel = 2'b00;
 				branch = 1'b0;
+				srcA_sel = 1'b0;
 			end
 			7'b0000011: begin
 				reg_write = 1'b1;
@@ -37,6 +40,7 @@ module Control_Unit(
 				jump = 1'b0;
 				result_sel = 2'b01;
 				branch = 1'b0;
+				srcA_sel = 1'b0;
 			end
 			7'b0100011: begin
 				reg_write = 1'b0;
@@ -46,6 +50,7 @@ module Control_Unit(
 				jump = 1'b0;
 				result_sel = 2'b00;
 				branch = 1'b0;
+				srcA_sel = 1'b0;
 			end
 			7'b1100111: begin 
 				reg_write = 1'b1;
@@ -55,6 +60,7 @@ module Control_Unit(
 				jump = 1'b1;
 				result_sel = 2'b10;
 				branch = 1'b0;
+				srcA_sel = 1'b0;
 			end
 			7'b1100011: begin
 				reg_write = 1'b0;
@@ -64,6 +70,7 @@ module Control_Unit(
 				jump = 1'b0;
 				result_sel = 2'b00;
 				branch = 1'b1;
+				srcA_sel = 1'b0;
 			end
 			default: begin
 				reg_write = 1'b0;
@@ -73,6 +80,7 @@ module Control_Unit(
 				jump = 1'b0;
 				result_sel = 2'b00;
 				branch = 1'b0;
+				srcA_sel = 1'b0;
 			end
 		endcase
 	end
