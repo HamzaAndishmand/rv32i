@@ -46,7 +46,7 @@ module Instruction_Decoder(
 				rs1 = 5'd0;
 				rs2 = 5'd0;
 			end
-			7'b1101111: begin
+			7'b1101111: begin //J-Type Instruction
 				rd = Instruction[11:7];
 				rs1 = 5'd0;
 				rs2 = 5'd0;
