@@ -92,6 +92,16 @@ module Control_Unit(
 				branch = 1'b0;
 				srcA_sel = 1'b1;
 			end
+			7'b1101111: begin
+				reg_write = 1'b1;
+				read = 1'b0;
+				mem_write = 1'b0;
+				srcB_sel = 2'b01;
+				jump = 1'b1;
+				result_sel = 2'b10;
+				branch = 1'b0;
+				srcA_sel = 1'b1;
+			end
 			default: begin
 				reg_write = 1'b0;
 				read  = 1'b0;
