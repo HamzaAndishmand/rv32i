@@ -3,7 +3,7 @@ module Branch(
 	input logic [2:0] funct3,
 	input logic branch,
 	input logic [31:0] rs1, rs2,
-	output branch_taken 
+	output logic branch_taken 
 	);
 	always_comb begin
 		case(funct3)
