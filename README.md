@@ -3,41 +3,34 @@
 > An in-progress hardware/software co-design of a RISC-V CPU
 
 [![RTL Verification](https://github.com/HamzaAndishmand/rv32i/actions/workflows/ci.yml/badge.svg)](https://github.com/HamzaAndishmand/rv32i/actions/workflows/ci.yml)
-![Status](https://img.shields.io/badge/status-In%20Progress-blue)
+![RTL Status](https://img.shields.io/badge/RTL%20Status-Complete-green)
+![Verification Status](https://img.shields.io/badge/Verification-In%20Progress-blue)
 ![Language](https://img.shields.io/badge/SystemVerilog-RTL-orange)
 
 ## Overview
-This project contains the documentation of a single-cycle RV32I RISC-V processor that was implemented from scratch using SystemVerilog. Testbenches simulated under Verilator and are run after every push.
+This project is a single-cycle RV32I RISC-V processor implemented from scratch in SystemVerilog. Testbench runs under Verilator in CI on every push.
 
 ## Project Status
-**Current Working:**
+**Done:**
 - Complete implementation of all instruction types (R, I, S, B, U, and J)
-- ALU with a self-checking testbench and independent oracle
-- C++ assembler that converts R-type and I-type instructions to 32 bit binary machine code
+- Single-cycle datapath integrated
+- ALU verified with self-checking testbench. Oracle is written from the spec, tested on corner cases and 1000+ random vectors
+- C++ assembler that converts R-type and I-type instructions to 32-bit binary machine code
 - CI pipeline under Verilator
 
-**WIP:**
-- top.sv
-- Immediate_Gen testbench
-
-**Soon to be added:** 
-- Single-cycle data path integration
-- C++ golden reference models for testbenched modules
-- S, B, U and J instruction conversion to assembler
+**Possible Extensions:**
+- Python reference models with cocotb
+- Two-pass assembler with error reporting
 
 ## Architecture
 ![Block diagram](./Diagrams/RV32I.drawio.png)
 
 ## Verification Philosophy
 
-All modules are checked against a reference model. Each modules' testbench drives the DUT with random inputs then compares the outputs against the oracle
-which also implements the same operations from the spec, independent from the RTL. This system has done a good job at flagging bugs.
+Modules are checked against a reference model. Each module's testbench drives the DUT with random inputs then compares the outputs against the oracle.
 
-Currently, oracles are written in SystemVerilog within each testbench. Porting the oracles to C++ golden models is the next step after datapath integration.
-
-## Known Issues
-- CI only covers ALU testbench. More modules to be added as soon as the testbenches are complete.
-- The assembler is a table driven translator, it looks up each mnemonic in an opcode/funct table and packs the operand fields into a 32-bit word. Once the CPU is complete I'd like to grow it into a full two pass assembler with error reporting.
+**Possible Extensions To Verification:**
+-UVM, SVA, and functional coverage
 
 ## Build & Run
 
@@ -51,9 +44,9 @@ git clone https://github.com/HamzaAndishmand/rv32i.git
 cd rv32i
 make sim_verilator
 ```
-
 **Expected output:**
-```bash
+
+```text
 Total tests passed:        1000
 Total tests failed:           0
 random_num done
@@ -70,3 +63,7 @@ To clean build artifacts:
 ```bash
 make clean
 ```
+
+## Known Issues
+- CI only covers ALU testbench. More modules to be added as soon as the testbenches are complete.
+
