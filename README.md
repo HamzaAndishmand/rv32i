@@ -6,6 +6,7 @@
 ![RTL Status](https://img.shields.io/badge/RTL%20Status-Complete-green)
 ![Verification Status](https://img.shields.io/badge/Verification-In%20Progress-blue)
 ![Language](https://img.shields.io/badge/SystemVerilog-RTL-orange)
+![Scripting](https://img.shields.io/badge/Scripting-Python-blue)
 
 ## Overview
 This project is a single-cycle RV32I RISC-V processor implemented from scratch in SystemVerilog. Testbench runs under Verilator in CI on every push.
@@ -18,9 +19,14 @@ This project is a single-cycle RV32I RISC-V processor implemented from scratch i
 - C++ assembler that converts R-type and I-type instructions to 32-bit binary machine code
 - CI pipeline under Verilator
 
+**WIP:**
+- Python program inspector and disassembler
+- Testbench environment (End-of-test comparison, exhaustive verification of core modules, and mutation testing)
+
 **Possible Extensions:**
 - Python reference models with cocotb
 - Two-pass assembler with error reporting
+- Full core lockstep co-simulation
 
 ## Architecture
 ![Block diagram](./Diagrams/RV32I.drawio.png)
