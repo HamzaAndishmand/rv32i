@@ -1,3 +1,7 @@
 .nvim/
 
 obj_dir/
+
+synth/
+
+oss-cad-suite/
