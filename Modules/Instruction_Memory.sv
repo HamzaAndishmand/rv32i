@@ -1,5 +1,5 @@
 module Instruction_Memory #(
-	parameter string MEMORY_FILE = "instructions.txt"
+	parameter MEMORY_FILE = "Tools/instructions.txt"
 	)
 	( input [31:0] pc,
 		output logic [31:0] instruction 
