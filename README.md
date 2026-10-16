@@ -9,60 +9,38 @@
 ![Scripting](https://img.shields.io/badge/Scripting-Python-blue)
 
 ## Overview
-This project is a single-cycle RV32I RISC-V processor implemented from scratch in SystemVerilog. Testbench runs under Verilator in CI on every push.
+This project is a single-cycle RV32I processor core written in SystemVerilog, targeted for Lattice iCE40 FPGA.
 
-## Project Status
-**Done:**
-- Complete implementation of all instruction types (R, I, S, B, U, and J)
-- Single-cycle datapath integrated
-- ALU verified with self-checking testbench. Oracle is written from the spec, tested on corner cases and 1000+ random vectors
-- C++ assembler that converts R-type and I-type instructions to 32-bit binary machine code
-- CI pipeline under Verilator
-
+## Status
 **WIP:**
 - Python program inspector and disassembler
-- Testbench environment (End-of-test comparison, exhaustive verification of core modules, and mutation testing)
-
-**Possible Extensions:**
-- Python reference models with cocotb
-- Two-pass assembler with error reporting
-- Full core lockstep co-simulation
+- End to end verification
 
 ## Architecture
 ![Block diagram](./Diagrams/RV32I.drawio.png)
 
-## Verification Philosophy
+## Synthesis Results
+- 2784 LUT4
+- 1024 flip-flops
+- Fmax = 35.4 MHz
 
-Modules are checked against a reference model. Each module's testbench drives the DUT with random inputs then compares the outputs against the oracle.
+The register file is being built from FFs instead of BRAM, its read logic uses 2094 LUT4s. This is due to it having reset and asynchronous read (BRAM does not support that). Removing reset and makeing reads synchronous is the next step.
 
-**Possible Extensions To Verification:**
--UVM, SVA, and functional coverage
 
-## Build & Run
+## Run
 
 **Required**
 - Verilator v5.050
 - GNU Make
+- OSS-CAD-Suite
 
 **Steps**
 ```bash
 git clone https://github.com/HamzaAndishmand/rv32i.git
 cd rv32i
 make sim_verilator
-```
-**Expected output:**
-
-```text
-Total tests passed:        1000
-Total tests failed:           0
-random_num done
-Total tests passed:        3240
-Total tests failed:           0
-check_corners done
-- Testbench/ALU_tb.sv:184: Verilog $finish
-- S i m u l a t i o n   R e p o r t: Verilator 5.050 2026-07-01
-- Verilator: $finish at 52ns; walltime 0.009 s; speed 5.650 us/s
-- Verilator: cpu 0.009 s on 1 threads; allocated 7 MB
+make synth
+make pnr_ice40
 ```
 
 To clean build artifacts:
@@ -72,4 +50,4 @@ make clean
 
 ## Known Issues
 - CI only covers ALU testbench. More modules to be added as soon as the testbenches are complete.
-
+- Assembler only cover R and I type instructions
