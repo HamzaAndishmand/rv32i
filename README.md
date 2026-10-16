@@ -50,4 +50,4 @@ make clean
 
 ## Known Issues
 - CI only covers ALU testbench. More modules to be added as soon as the testbenches are complete.
-- Assembler only cover R and I type instructions
+- Assembler only covers R and I-type instructions
