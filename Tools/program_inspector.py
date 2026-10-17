@@ -1,3 +1,16 @@
+opcode_type = {
+    "0110011": "R",
+    "0010011": "I",
+    "0000011": "I (JALR)",
+    "1100111": "I (Load)",
+    "0100011": "S",
+    "1100011": "B",
+    "0110111": "U (LUI)",
+    "0010111": "U (AUIPC)",
+    "1101111": "J",
+}
+
+
 def bits(instr, upper, lower):
     return instr[31 - upper : 32 - lower]
 
