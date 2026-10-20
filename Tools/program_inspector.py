@@ -21,6 +21,8 @@ def main():
             instr = instr.strip()
 
             opcode = bits(instr, 6, 0)
+            format = opcode_type[opcode]
+
             if opcode == "0110011":
                 funct7 = bits(instr, 31, 25)
                 rs2 = bits(instr, 24, 20)
@@ -29,7 +31,7 @@ def main():
                 rd = bits(instr, 11, 7)
 
             print(instr)
-            print(f"{opcode} {rd} {funct3} {rs1} {rs2} {funct7}")
+            print(f"{format}: {opcode} {rd} {funct3} {rs1} {rs2} {funct7}")
     print(" ")
 
 
