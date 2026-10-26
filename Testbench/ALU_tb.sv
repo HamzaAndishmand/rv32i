@@ -70,9 +70,9 @@ module ALU_tb();
 	task automatic random_num();
 		int count = 1000;
 		while (count > 0) begin
-			for (byte i = 0; i < 10; i++) begin 
+			foreach (enum_cases[i]) begin
 		
-				control = i[3:0];
+				control = enum_cases[i];
 				srcA = $random;
 				srcB = $random;
 				#10;
