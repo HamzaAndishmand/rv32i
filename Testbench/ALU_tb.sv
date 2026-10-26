@@ -14,6 +14,7 @@ module ALU_tb();
 
 	int pass = 0;
 	int fail = 0;
+	int total_fail = 0;
 	
 	task automatic reset_tally();
 		pass = 0;
@@ -179,8 +180,12 @@ module ALU_tb();
 
 	initial begin
 		random_num();
+		total_fail = total_fail + fail;
 		reset_tally();
 		check_corners();
+		total_fail = total_fail + fail;
+		if (total_fail > 0)
+			$fatal(1, "Total: %0d vectors failed", total_fail);
 		$finish;
 	end
 endmodule
